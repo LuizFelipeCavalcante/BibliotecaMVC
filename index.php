@@ -1,2 +1,3 @@
 <?php
-include "View/CadastroUsuario.php";
+
+header('Location: View/CadastroUsuario.php');

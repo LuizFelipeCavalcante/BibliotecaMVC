@@ -17,8 +17,12 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $book->setNome($_POST['nome']);
             $book->setEmail($_POST['email']);
-            $book->setTelefone($_POST['telefone']);
-            $book->setSenha($_POST['senha']);
+            $book->setAutor($_POST['autor']);
+            $book->setGenero($_POST['genero']);
+            $book->setEstoque($_POST['estoque']);
+            $book->setDataEntrada($_POST['dataentrada']);
+            $book->setDataSaida($_POST['datasaida']);
+
 
             if (
                 $bookDao->createbook($conta)
@@ -27,16 +31,7 @@ switch ($action) {
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
-            $books = $contaDao->validabook($book->getEmail(), $book->getSenha());
-            if ($books == null) {
-                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
-            } else {
-                $_SESSION['user_id'] = $books->getId();
-                $_SESSION['user_name'] = $books->getNome();
-                $_SESSION['email'] = $books->getEmail();
-                $_SESSION['telefone'] = $books->getTelefone();
-                $_SESSION['senha'] = $books->getSenha();
-            }
+        
             exit();
         }
         break;
