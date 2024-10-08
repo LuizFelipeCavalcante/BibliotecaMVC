@@ -1,6 +1,6 @@
 <?php
 
-require_once '../Connection.php';
+require_once '../../Config/Connection.php';
 require_once 'UserDao.php';
 require_once '../User.php';
 

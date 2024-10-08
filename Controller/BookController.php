@@ -13,70 +13,70 @@ $book = new Book();
 
 
 switch ($action) {
-    case 'create_livro':
+    case 'create_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $livro->setNome($_POST['nome']);
-            $livro->setEmail($_POST['email']);
-            $livro->setTelefone($_POST['telefone']);
-            $livro->setSenha($_POST['senha']);
+            $book->setNome($_POST['nome']);
+            $book->setEmail($_POST['email']);
+            $book->setTelefone($_POST['telefone']);
+            $book->setSenha($_POST['senha']);
 
             if (
-                $bookDao->createlivro($conta)
+                $bookDao->createbook($conta)
             ) {
                 displayMessage('Registro inserido com sucesso!', '../index.php');
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
-            $livros = $contaDao->validalivro($livro->getEmail(), $livro->getSenha());
-            if ($livros == null) {
+            $books = $contaDao->validabook($book->getEmail(), $book->getSenha());
+            if ($books == null) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
-                $_SESSION['user_id'] = $livros->getId();
-                $_SESSION['user_name'] = $livros->getNome();
-                $_SESSION['email'] = $livros->getEmail();
-                $_SESSION['telefone'] = $livros->getTelefone();
-                $_SESSION['senha'] = $livros->getSenha();
+                $_SESSION['user_id'] = $books->getId();
+                $_SESSION['user_name'] = $books->getNome();
+                $_SESSION['email'] = $books->getEmail();
+                $_SESSION['telefone'] = $books->getTelefone();
+                $_SESSION['senha'] = $books->getSenha();
             }
             exit();
         }
         break;
 
-    case 'valida_livro':
+    case 'valida_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            $livros = $contaDao->validalivro($email, $senha);
-            if ($livros == null) {
+            $books = $contaDao->validabook($email, $senha);
+            if ($books == null) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
                 session_start();
-                $_SESSION['user_id'] = $livros->getId();
-                $_SESSION['user_name'] = $livros->getNome();
-                $_SESSION['email'] = $livros->getEmail();
-                $_SESSION['telefone'] = $livros->getTelefone();
-                $_SESSION['senha'] = $livros->getSenha();
+                $_SESSION['user_id'] = $books->getId();
+                $_SESSION['user_name'] = $books->getNome();
+                $_SESSION['email'] = $books->getEmail();
+                $_SESSION['telefone'] = $books->getTelefone();
+                $_SESSION['senha'] = $books->getSenha();
                 header('Location: ../index.php');
                 exit();
             }
         }
         break;
 
-    case 'update_livro':
+    case 'update_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $livro->setNome($_POST['nome']);
-            $livro->setEmail($_POST['email']);
-            $livro->setTelefone($_POST['telefone']);
-            $livro->setId($_SESSION['user_id']);
-            $livro->setSenha($_SESSION['senha']);
-            $livros = $contaDao->updatelivro($livro);
-            if ($livros) {
-                $_SESSION['user_id'] = $livros->getId();
-                $_SESSION['user_name'] = $livros->getNome();
-                $_SESSION['email'] = $livros->getEmail();
-                $_SESSION['telefone'] = $livros->getTelefone();
-                $_SESSION['senha'] = $livros->getSenha();
-                $_SESSION['foto'] = $livros->getFoto();
+            $book->setNome($_POST['nome']);
+            $book->setEmail($_POST['email']);
+            $book->setTelefone($_POST['telefone']);
+            $book->setId($_SESSION['user_id']);
+            $book->setSenha($_SESSION['senha']);
+            $books = $contaDao->updatebook($book);
+            if ($books) {
+                $_SESSION['user_id'] = $books->getId();
+                $_SESSION['user_name'] = $books->getNome();
+                $_SESSION['email'] = $books->getEmail();
+                $_SESSION['telefone'] = $books->getTelefone();
+                $_SESSION['senha'] = $books->getSenha();
+                $_SESSION['foto'] = $books->getFoto();
 
                 header('Location: ../View/Usuario/Perfil.php');
                 exit();
