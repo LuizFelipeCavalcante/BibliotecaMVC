@@ -51,7 +51,7 @@ class BookDaoImpl implements BookDao {
         try {
             $statement = $this->conn->prepare("UPDATE book SET nome = :nome, autor = :autor, genero = :genero, estoque = :estoque, dataEntrada = :dataEntrada, datasaida = :datasaida, dataSaida = :dataSaida WHERE id = :id");
             $statement->bindParam(':id', $book->getId());
-            $statement->bindParam(':nome', $book->getNome());
+            $statement->bindParam(':nome', $book->getTitulo());
             $statement->bindParam(':autor', $book->getAutor());
             $statement->bindParam(':genero', $book->getGenero());
             $statement->bindParam(':estoque', $book->getEstoque());
@@ -73,4 +73,3 @@ class BookDaoImpl implements BookDao {
         }
     }
 }
-?>

@@ -21,14 +21,14 @@ switch ($action) {
             $conta->setSenha($_POST['senha']);
 
             if (
-                $contaDao->createConta($conta)
+                $contaDao->createUser($conta)
             ) {
                 displayMessage('Registro inserido com sucesso!', '../index.php');
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
-            $contas = $contaDao->validaConta($conta->getEmail(), $conta->getSenha());
-            if ($contas == null) {
+            $contas = $contaDao->validateLogin($conta->getEmail(), $conta->getSenha());
+            if ($contas == null||$contas == false) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
                 $_SESSION['user_id'] = $contas->getId();
@@ -46,8 +46,8 @@ switch ($action) {
             $email = $_POST['email'];
             $senha = $_POST['senha'];
 
-            $contas = $contaDao->validaConta($email, $senha);
-            if ($contas == null) {
+            $contas = $contaDao->validateLogin($email, $senha);
+            if ($contas == null||$contas == false) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
                 session_start();
@@ -69,23 +69,29 @@ switch ($action) {
             $conta->setTelefone($_POST['telefone']);
             $conta->setId($_SESSION['user_id']);
             $conta->setSenha($_SESSION['senha']);
-            $contas = $contaDao->updateConta($conta);
+            $contas = $contaDao->updateUser($conta);
             if ($contas) {
-                $_SESSION['user_id'] = $contas->getId();
-                $_SESSION['user_name'] = $contas->getNome();
-                $_SESSION['email'] = $contas->getEmail();
-                $_SESSION['telefone'] = $contas->getTelefone();
-                $_SESSION['senha'] = $contas->getSenha();
-                $_SESSION['foto'] = $contas->getFoto();
+                $_SESSION['user_id'] = $conta->getId();
+                $_SESSION['user_name'] = $conta->getNome();
+                $_SESSION['email'] = $conta->getEmail();
+                $_SESSION['telefone'] = $conta->getTelefone();
+                $_SESSION['senha'] = $conta->getSenha();
 
-                header('Location: ../View/Usuario/Perfil.php');
+                header('Location: ../index.php');
                 exit();
             } else {
                 displayMessage('Erro ao atualizar o registro.');
             }
         }
         break;
-
+        case 'delete_conta':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $conta = $contaDao->deleteUser($_SESSION['user_id']);
+                if ($conta) {
+                    header('Location: ../index.php');
+                }
+                else {displayMessage('Erro ao deletar o registro.');}
+            }
 
     default:
         displayMessage('Ação não reconhecida.');

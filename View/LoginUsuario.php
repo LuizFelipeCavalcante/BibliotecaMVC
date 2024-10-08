@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Cadastro Usuario</title>
+    <title>Login Usuario</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/Cadastro.css">
@@ -84,26 +84,15 @@
         <div class="big-container">
             <div class="signup-container">
                 <div class="signup-box">
-
-                    <h2>Cadastro Usuário</h2>
-                    <form action="../Controller/UserController?action=create_conta" method="post"
+                    <h2>Login Usuário</h2>
+                    <form action="../Controller/UserController?action=valida_conta" method="post"
                         enctype="multipart/form-data">
-                        <div class="form-group">
-                            <label for="nome">Nome:</label>
-                            <input type="text" id="nome" name="nome" required>
-                        </div>
                         <div class="form-group">
 
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" required>
                         </div>
-                        <div class="form-group">
-
-                            <label for="telefone">Telefone:</label>
-                            <input type="tel" maxlength="15" onkeyup="handlePhone(event)" class="form-control"
-                                id="telefone" name="telefone"
-                                title="Número de telefone precisa ser no formato (00) 0 0000-0000" />
-                        </div>
+                        
                         <div class="form-group">
 
                             <label for="senha">Senha:</label>
@@ -116,9 +105,9 @@
                                 </svg></button>
                         </div>
 
-                        <a href="/"><button class="btn-entrar" type="submit">Cadastrar</button></a>
+                        <a href="/"><button class="btn-entrar" type="submit">Login</button></a>
                         <div class="bottom-text">
-                            <p>Já possui conta? <a href="LoginUsuario">Faça login aqui!</a></p>
+                            <p>Não possui conta? <a href="CadastroUsuario">Crie sua conta aqui!</a></p>
                         </div>
                     </form>
                 </div>
