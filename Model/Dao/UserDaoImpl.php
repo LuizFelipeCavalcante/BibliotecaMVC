@@ -11,26 +11,6 @@ class UserDaoImpl implements UserDao {
         $this->conn = (new Connection())->getConnection();
     }
 
-    public function getAllUsers() {
-        try {
-            $statement = $this->conn->prepare("SELECT * FROM user");
-            $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function getUser($id) {
-        try {
-            $statement = $this->conn->prepare("SELECT * FROM user WHERE id = :id");
-            $statement->bindParam(':id', $id);
-            $statement->execute();
-            return $statement->fetchObject('User');
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
 
     public function createUser($user) {
         try {
@@ -45,25 +25,13 @@ class UserDaoImpl implements UserDao {
         }
     }
 
-    public function updateUser($user) {
+    public function validaLogin($email, $senha) {
         try {
-            $statement = $this->conn->prepare("UPDATE user SET nome = :nome, email = :email, telefone = :telefone, senha = :senha, dataEntrada = :dataEntrada, datasaida = :datasaida, dataSaida = :dataSaida, dono_user = :dono_user WHERE id = :id");
-            $statement->bindParam(':id', $user->getId());
-            $statement->bindParam(':nome', $user->getNome());
-            $statement->bindParam(':email', $user->getEmail());
-            $statement->bindParam(':telefone', $user->getTelefone());
-            $statement->bindParam(':senha', $user->getSenha());
-            return $statement->execute();
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
-    public function deleteUser($id) {
-        try {
-            $statement = $this->conn->prepare("DELETE FROM user WHERE id = :id");
-            $statement->bindParam(':id', $id);
-            return $statement->execute();
+            $statement = $this->conn->prepare("SELECT * FROM user WHERE email = :email AND senha = :senha");
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':senha', $senha);
+            $statement->execute();
+            return $statement->fetchObject('User');
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
