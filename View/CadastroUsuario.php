@@ -5,82 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Cadastro Usuario</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/Cadastro.css">
     <script src="js/Cadastro.js" type="text/javascript" defer></script>
-    <style>
-        .btnsenha {
-            border: none;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        /* Estilo para SVGs */
-        svg {
-            display: inline-block;
-        }
-    </style>
 </head>
 
-<body>
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Navbar</title>
-        <!-- Bootstrap CSS -->
-        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Custom CSS -->
-        <style>
-            .navbar-nav .nav-link {
-                color: #2e9fea !important;
-                /* Cor personalizada para os links */
-                border: 1px solid #d3d3d3;
-                /* Borda cinza claro */
-                border-radius: 4px;
-                /* Borda arredondada */
-                padding: 8px 12px;
-                /* Espaçamento interno */
-                margin: 2px;
-                /* Espaçamento entre os links */
-                transition: background-color 0.3s, border-color 0.3s;
-                /* Transição suave para o hover */
-            }
-
-            .navbar-nav .nav-link:hover {
-                background-color: #e9f5fc;
-                /* Cor de fundo ao passar o mouse */
-                border-color: #2e9fea;
-                /* Cor da borda ao passar o mouse */
-                color: #2e9fea !important;
-                /* Cor do texto ao passar o mouse */
-            }
-
-            .navbar-brand img {
-                max-height: 50px;
-                /* Ajuste a altura da imagem do logotipo */
-            }
-
-            .navbar {
-                text-align: center;
-                /* Centraliza o texto no header */
-            }
-
-            .navbar-collapse {
-                justify-content: center;
-                /* Centraliza o conteúdo da barra de navegação */
-            }
-        </style>
-    </head>
-
     <body>
-        <?php
 
-        ?>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <div class="big-container">
             <div class="signup-container">
                 <div class="signup-box">
@@ -96,13 +28,6 @@
 
                             <label for="email">Email:</label>
                             <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-
-                            <label for="telefone">Telefone:</label>
-                            <input type="tel" maxlength="15" onkeyup="handlePhone(event)" class="form-control"
-                                id="telefone" name="telefone"
-                                title="Número de telefone precisa ser no formato (00) 0 0000-0000" />
                         </div>
                         <div class="form-group">
 
@@ -124,20 +49,7 @@
                 </div>
             </div>
         </div>
-        <script>
-            const handlePhone = (event) => {
-                let input = event.target
-                input.value = phoneMask(input.value)
-            }
 
-            const phoneMask = (value) => {
-                if (!value) return ""
-                value = value.replace(/\D/g, '')
-                value = value.replace(/(\d{2})(\d)/, "($1) $2")
-                value = value.replace(/(\d)(\d{4})$/, "$1-$2")
-                return value
-            }
-        </script>
     </body>
 
 </html>
