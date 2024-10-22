@@ -10,11 +10,10 @@ create table user (
   senha VARCHAR(40) NOT NULL
 );
 
-create table cliente (
+create table customer (
   id INT AUTO_INCREMENT not null  PRIMARY KEY,
   name VARCHAR(60) NOT NULL,
   email VARCHAR(100) NOT NULL,
-  telefone varchar(15) NOT NULL,
   senha VARCHAR(40) NOT NULL
 );
 
