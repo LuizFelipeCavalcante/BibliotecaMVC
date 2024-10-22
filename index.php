@@ -1,9 +1,11 @@
 <?php
 if ($_SESSION['user_id'] == null) {
-    header('Location: View/LoginUsuario.php');
+    header('Location: View/ListarLivros.php');
 }
 else {
-//O codigo caso o cara tiver logado
+    $nomeUsuário = '';
+$_SESSION ['user_id'] = $nomeUsuário;
+echo "carlinhos maia";
 
 
 
