@@ -7,10 +7,8 @@ include_once '../Model/Dao/BookDaoImpl.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : null;
-$bookDao = new BookDAOImpl();                       
+$bookDao = new BookDAOImpl();
 $book = new Book();
-
-
 
 switch ($action) {
     case 'create_book':
@@ -24,27 +22,27 @@ switch ($action) {
 
 
             if (
-                $bookDao->createbook($conta)
+                $bookDao->createbook($book)
             ) {
                 displayMessage('Registro inserido com sucesso!', '../index.php');
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
-        
+
             exit();
         }
         break;
 
-
     case 'update_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+            $book->setId($id);
             $book->setNome($_POST['nome']);
             $book->setAutor($_POST['autor']);
             $book->setGenero($_POST['genero']);
             $book->setEstoque($_POST['estoque']);
             $book->setDataEntrada($_POST['dataentrada']);
             $book->setDataSaida($_POST['datasaida']);
-
             $books = $bookDao->updateBook($book);
             if ($books) {
                 $_SESSION['book_id'] = $book->getId();
@@ -62,14 +60,15 @@ switch ($action) {
         }
         break;
 
-        case 'delete_book':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $book = $bookDao->deleteBook($_SESSION['book_id']);
-                if ($book) {
-                    header('Location: ../index.php');
-                }
-                else {displayMessage('Erro ao deletar o registro.');}
+    case 'delete_book':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $book = $bookDao->deleteBook($_SESSION['book_id']);
+            if ($book) {
+                header('Location: ../index.php');
+            } else {
+                displayMessage('Erro ao deletar o registro.');
             }
+        }
 
 
     default:
