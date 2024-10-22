@@ -4,4 +4,4 @@ interface CustomerDao {
     public function createCustomer($customer);
     public function login($email,$senha);
 }
-?>
+?>  
