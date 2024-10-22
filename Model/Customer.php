@@ -3,7 +3,6 @@ class Customer {
     protected $id;
     protected $nome;
     protected $email;
-    protected $telefone;
     protected $senha;
 
     // Getters
@@ -19,9 +18,6 @@ class Customer {
         return $this->email;
     }
 
-    public function getTelefone() {
-        return $this->telefone;
-    }
 
     public function getSenha() {
         return $this->senha;
@@ -39,10 +35,6 @@ class Customer {
 
     public function setEmail($email) {
         $this->email = $email;
-    }
-
-    public function settelefone($telefone) {
-        $this->telefone = $telefone;
     }
 
     public function setSenha($senha) {

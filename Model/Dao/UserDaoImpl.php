@@ -11,7 +11,27 @@ class UserDaoImpl implements UserDao {
         $this->conn = (new Connection())->getConnection();
     }
 
+    public function getAllUsers() {
+        try {
+            $statement = $this->conn->prepare("SELECT * FROM usuario");
+            $statement->execute();
+            return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
 
+    public function getUser($id) {
+        try {
+            $statement = $this->conn->prepare("SELECT * FROM usuario WHERE id = :id");
+            $statement->bindParam(':id', $id);
+            $statement->execute();
+            return $statement->fetchObject('User');
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
     public function createUser($user) {
         try {
             $statement = $this->conn->prepare("INSERT INTO user (nome, email, telefone, senha) VALUES (:nome, :email, :telefone, :senha)");
@@ -25,17 +45,6 @@ class UserDaoImpl implements UserDao {
         }
     }
 
-    public function validateLogin($email, $senha) {
-        try {
-            $statement = $this->conn->prepare("SELECT * FROM user WHERE email = :email AND senha = :senha");
-            $statement->bindParam(':email', $email);
-            $statement->bindParam(':senha', $senha);
-            $statement->execute();
-            return $statement->fetchObject('User');
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
     public function updateUser($user) {
         try {
             

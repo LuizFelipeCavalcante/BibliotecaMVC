@@ -13,7 +13,7 @@ $conta = new User();
 
 
 switch ($action) {
-    case 'create_conta':
+    case 'create_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conta->setNome($_POST['nome']);
             $conta->setEmail($_POST['email']);
@@ -41,28 +41,7 @@ switch ($action) {
         }
         break;
 
-    case 'valida_conta':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $senha = $_POST['senha'];
-
-            $contas = $contaDao->validateLogin($email, $senha);
-            if ($contas == null||$contas == false) {
-                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
-            } else {
-                
-                $_SESSION['user_id'] = $contas->getId();
-                $_SESSION['user_name'] = $contas->getNome();
-                $_SESSION['email'] = $contas->getEmail();
-                $_SESSION['telefone'] = $contas->getTelefone();
-                $_SESSION['senha'] = $contas->getSenha();
-                header('Location: ../index.php');
-                exit();
-            }
-        }
-        break;
-
-    case 'update_conta':
+    case 'update_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $conta->setNome($_POST['nome']);
             $conta->setEmail($_POST['email']);
@@ -84,14 +63,15 @@ switch ($action) {
             }
         }
         break;
-        case 'delete_conta':
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $conta = $contaDao->deleteUser($_SESSION['user_id']);
-                if ($conta) {
-                    header('Location: ../index.php');
-                }
-                else {displayMessage('Erro ao deletar o registro.');}
+
+    case 'delete_user':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $conta = $contaDao->deleteUser($_SESSION['user_id']);
+            if ($conta) {
+                header('Location: ../index.php');
             }
+            else {displayMessage('Erro ao deletar o registro.');}
+        }
 
     default:
         displayMessage('Ação não reconhecida.');
