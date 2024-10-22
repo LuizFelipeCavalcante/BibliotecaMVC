@@ -50,7 +50,7 @@ switch ($action) {
             if ($contas == null||$contas == false) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
-                session_start();
+                
                 $_SESSION['user_id'] = $contas->getId();
                 $_SESSION['user_name'] = $contas->getNome();
                 $_SESSION['email'] = $contas->getEmail();

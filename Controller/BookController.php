@@ -7,7 +7,7 @@ include_once '../Model/Dao/BookDaoImpl.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : null;
-$bookDao = new BookDAOImpl();
+$bookDao = new BookDAOImpl();                       
 $book = new Book();
 
 
@@ -16,7 +16,6 @@ switch ($action) {
     case 'create_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $book->setNome($_POST['nome']);
-            $book->setEmail($_POST['email']);
             $book->setAutor($_POST['autor']);
             $book->setGenero($_POST['genero']);
             $book->setEstoque($_POST['estoque']);
@@ -36,50 +35,41 @@ switch ($action) {
         }
         break;
 
-    case 'valida_book':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $senha = $_POST['senha'];
-
-            $books = $contaDao->validabook($email, $senha);
-            if ($books == null) {
-                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
-            } else {
-                session_start();
-                $_SESSION['user_id'] = $books->getId();
-                $_SESSION['user_name'] = $books->getNome();
-                $_SESSION['email'] = $books->getEmail();
-                $_SESSION['telefone'] = $books->getTelefone();
-                $_SESSION['senha'] = $books->getSenha();
-                header('Location: ../index.php');
-                exit();
-            }
-        }
-        break;
 
     case 'update_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $book->setNome($_POST['nome']);
-            $book->setEmail($_POST['email']);
-            $book->setTelefone($_POST['telefone']);
-            $book->setId($_SESSION['user_id']);
-            $book->setSenha($_SESSION['senha']);
-            $books = $contaDao->updatebook($book);
-            if ($books) {
-                $_SESSION['user_id'] = $books->getId();
-                $_SESSION['user_name'] = $books->getNome();
-                $_SESSION['email'] = $books->getEmail();
-                $_SESSION['telefone'] = $books->getTelefone();
-                $_SESSION['senha'] = $books->getSenha();
-                $_SESSION['foto'] = $books->getFoto();
+            $book->setAutor($_POST['autor']);
+            $book->setGenero($_POST['genero']);
+            $book->setEstoque($_POST['estoque']);
+            $book->setDataEntrada($_POST['dataentrada']);
+            $book->setDataSaida($_POST['datasaida']);
 
-                header('Location: ../View/Usuario/Perfil.php');
+            $books = $bookDao->updateBook($book);
+            if ($books) {
+                $_SESSION['book_id'] = $book->getId();
+                $_SESSION['book_name'] = $book->getNome();
+                $_SESSION['book_genero'] = $book->getGenero();
+                $_SESSION['book_estoque'] = $book->getEstoque();
+                $_SESSION['book_dataentrada'] = $book->getDataEntrada();
+                $_SESSION['book_datasaida'] = $book->getDataSaida();
+
+                header('Location: ../index.php');
                 exit();
             } else {
                 displayMessage('Erro ao atualizar o registro.');
             }
         }
         break;
+
+        case 'delete_book':
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $book = $bookDao->deleteBook($_SESSION['book_id']);
+                if ($book) {
+                    header('Location: ../index.php');
+                }
+                else {displayMessage('Erro ao deletar o registro.');}
+            }
 
 
     default:
