@@ -1,6 +1,6 @@
 <?php
 if ($_SESSION['user_id'] == null) {
-    header('Location: View/ListarLivros.php');
+    header('Location: View/Users/LoginUsuario.php');
 }
 else {
     $nomeUsuário = '';

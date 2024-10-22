@@ -23,7 +23,7 @@
                        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
                 <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
-            <a href="books/create" class="btn btn-success">Novo Livro</a>
+            <a href="createLivros" class="btn btn-success">Novo Livro</a>
         </div>
 
         <?php if (!empty($books)): ?>
