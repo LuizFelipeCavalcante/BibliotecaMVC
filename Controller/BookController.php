@@ -3,7 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include_once '../Model/Book.php';
-include_once '../Model/Dao/BookDaoImpl.php';
+include_once '../Model/BookDaoImpl.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : null;

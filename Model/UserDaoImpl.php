@@ -1,8 +1,8 @@
 <?php
 
-require_once '../../Config/Connection.php';
+require_once 'Connection.php';
 require_once 'UserDao.php';
-require_once '../User.php';
+require_once 'User.php';
 
 class UserDaoImpl implements UserDao {
     private $conn;
@@ -40,6 +40,18 @@ class UserDaoImpl implements UserDao {
             $statement->bindParam(':telefone', $user->getTelefone());
             $statement->bindParam(':senha', $user->getSenha());
             return $statement->execute();
+        } catch (PDOException $e) {
+            echo "Error: " . $e->getMessage();
+        }
+    }
+    
+    public function validateLogin($email, $senha) {
+        try {
+            $statement = $this->conn->prepare("SELECT * FROM user WHERE email = :email AND senha = :senha");
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':senha', $senha);
+            $statement->execute();
+            return $statement->fetchObject('User');
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

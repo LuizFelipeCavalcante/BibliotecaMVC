@@ -1,7 +1,7 @@
 <?php
 
 require_once '../Model/Customer.php';
-require_once '../Model/Dao/CustomerDaoImpl.php';
+require_once '../Model/CustomerDaoImpl.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $customerDao = new CustomerDaoImpl();
@@ -23,17 +23,17 @@ switch ($action) {
                 $customer->setEmail($email);
                 $customer->setSenha($_POST['senha']);
 
-            
-                if ($customerDao->createCustomer($customer)) {
+                $newCustomerId = $customerDao->createCustomer($customer);
+
+                if ($newCustomerId) {
                     // Inicia a sessão e salva o ID do usuário
                     session_start();
-                    $_SESSION['id'] = $customerDao->getCustomer($customer->getId())->getId();
+                    $_SESSION['customer_id'] = $newCustomerId;
                     
-                    // Redireciona para a página nav.php
-                    header('Location: ../index.php');
+                    // header('Location: '); Direcionar para onde deverá ir após cadastro
                     exit();
                 } else {
-                    echo 'Erro ao criar o usuário.';
+                    
                 }
             }
         }
@@ -48,12 +48,13 @@ switch ($action) {
             if ($customer) {
                 session_start();
                 $_SESSION['customer_id'] = $customer->getId();
-                $_SESSION['customer_name'] = $customer->getNome();
-                $_SESSION['customer_email'] = $customer->getEmail();
-                header('Location: ../inde.php');
+                // header('Location: '); Direcionar para onde deverá ir após logado
                 exit();
             } else {
-                echo 'E-mail ou senha incorretos<br><a href="../index.php">Voltar à página de login</a>';
+                echo '<script type="text/javascript">
+                        alert("Email ou senha incorretos.");
+                        window.location.href="../index.php";
+                      </script>';
             }
         }
         break;

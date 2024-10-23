@@ -18,7 +18,7 @@
                 <div class="signup-box">
 
                     <h2>Cadastro Usuário</h2>
-                    <form action="../Controller/UserController?action=create_conta" method="post"
+                    <form action="../Controller/CustomerController?action=create_customer" method="post"
                         enctype="multipart/form-data">
                         <div class="form-group">
                             <label for="nome">Nome:</label>
@@ -43,7 +43,7 @@
 
                         <a href="/"><button class="btn-entrar" type="submit">Cadastrar</button></a>
                         <div class="bottom-text">
-                            <p>Já possui conta? <a href="LoginUsuario">Faça login aqui!</a></p>
+                            <p>Já possui conta? <a href="LoginCustomer">Faça login aqui!</a></p>
                         </div>
                     </form>
                 </div>
