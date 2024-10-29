@@ -25,7 +25,7 @@
             </form>
             <a href="books/create" class="btn btn-success">Novo Livro</a>
         </div>
-
+            
         <?php if (!empty($books)): ?>
             <div class="table-responsive">
                 <table class="table table-striped">
