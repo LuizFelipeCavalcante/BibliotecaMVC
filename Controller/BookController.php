@@ -13,13 +13,12 @@ $book = new Book();
 switch ($action) {
     case 'create_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $book->setNome($_POST['nome']);
-            $book->setAutor($_POST['autor']);
+            $book->setNome($_POST['title']);
+            $book->setAutor($_POST['author']);
             $book->setGenero($_POST['genero']);
             $book->setEstoque($_POST['estoque']);
-            $book->setDataEntrada($_POST['dataentrada']);
-            $book->setDataSaida($_POST['datasaida']);
-
+            $book->setDataEntrada($_POST['dataEntrada']);
+            $book->setDataSaida($_POST['dataSaida']);
 
             if (
                 $bookDao->createbook($book)
@@ -29,7 +28,7 @@ switch ($action) {
                 displayMessage('Erro ao inserir o registro.');
             }
 
-            exit();
+            
         }
         break;
 

@@ -1,10 +1,10 @@
 <?php
-if ($_SESSION['user_id'] == null) {
+if ($_SESSION['customer_id'] == null) {
     header('Location: View/LoginCustomer.php');
 }
 else {
     $nomeUsuário = '';
-$_SESSION ['user_id'] = $nomeUsuário;
+$_SESSION ['customer_id'] = $nomeUsuário;
 echo "carlinhos maia";
 
 

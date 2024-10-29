@@ -1,12 +1,14 @@
 <!-- views/books/create.php -->
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca - Cadastrar Novo Livro</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <div class="container mt-4">
         <div class="row">
@@ -26,85 +28,37 @@
                             </div>
                         <?php endif; ?>
 
-                        <form method="POST" action="/books/store" enctype="multipart/form-data">
+                        <form method="POST" action="../../Controller/BookController.php?action=create_book"
+                            enctype="multipart/form-data">
                             <div class="mb-3">
                                 <label for="title" class="form-label">Título *</label>
-                                <input type="text" class="form-control" id="title" name="title" 
-                                       value="<?php echo isset($old['title']) ? htmlspecialchars($old['title']) : ''; ?>" 
-                                       required>
+                                <input type="text" class="form-control" id="title" name="title" required>
                             </div>
 
                             <div class="mb-3">
                                 <label for="author" class="form-label">Autor *</label>
-                                <input type="text" class="form-control" id="author" name="author" 
-                                       value="<?php echo isset($old['author']) ? htmlspecialchars($old['author']) : ''; ?>" 
-                                       required>
+                                <input type="text" class="form-control" id="author" name="author" required>
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="publisher" class="form-label">Genero</label>
+                                <input type="text" class="form-control" id="genero" name="genero">
+                            </div>
+                            <div class="mb-3">
+                                <label for="publisher" class="form-label">Estoque</label>
+                                <input type="text" class="form-control" id="estoque" name="estoque">
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="edition" class="form-label">Data entrada</label>
+                                <input type="date" class="form-control" id="dataEntrada" name="dataEntrada">
                             </div>
 
                             <div class="mb-3">
-                                <label for="isbn" class="form-label">ISBN *</label>
-                                <input type="text" class="form-control" id="isbn" name="isbn" 
-                                       value="<?php echo isset($old['isbn']) ? htmlspecialchars($old['isbn']) : ''; ?>" 
-                                       required>
-                                <div class="form-text">Formato: ISBN-13 (exemplo: 978-0-123456-47-2)</div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="publisher" class="form-label">Editora</label>
-                                <input type="text" class="form-control" id="publisher" name="publisher" 
-                                       value="<?php echo isset($old['publisher']) ? htmlspecialchars($old['publisher']) : ''; ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="publication_year" class="form-label">Ano de Publicação</label>
-                                <input type="number" class="form-control" id="publication_year" name="publication_year" 
-                                       min="1000" max="<?php echo date('Y'); ?>" 
-                                       value="<?php echo isset($old['publication_year']) ? htmlspecialchars($old['publication_year']) : ''; ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="edition" class="form-label">Edição</label>
-                                <input type="text" class="form-control" id="edition" name="edition" 
-                                       value="<?php echo isset($old['edition']) ? htmlspecialchars($old['edition']) : ''; ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="pages" class="form-label">Número de Páginas</label>
-                                <input type="number" class="form-control" id="pages" name="pages" min="1" 
-                                       value="<?php echo isset($old['pages']) ? htmlspecialchars($old['pages']) : ''; ?>">
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="category" class="form-label">Categoria</label>
-                                <select class="form-select" id="category" name="category">
-                                    <option value="">Selecione uma categoria</option>
-                                    <?php foreach ($categories as $category): ?>
-                                        <option value="<?php echo htmlspecialchars($category['id']); ?>"
-                                            <?php echo (isset($old['category']) && $old['category'] == $category['id']) ? 'selected' : ''; ?>>
-                                            <?php echo htmlspecialchars($category['name']); ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Descrição</label>
-                                <textarea class="form-control" id="description" name="description" rows="3"><?php 
-                                    echo isset($old['description']) ? htmlspecialchars($old['description']) : ''; 
-                                ?></textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="cover_image" class="form-label">Imagem da Capa</label>
-                                <input type="file" class="form-control" id="cover_image" name="cover_image" 
-                                       accept="image/jpeg,image/png">
-                                <div class="form-text">Formatos aceitos: JPG, PNG. Tamanho máximo: 2MB</div>
-                            </div>
-
-                            <div class="mb-3 form-check">
-                                <input type="checkbox" class="form-check-input" id="available" name="available" value="1"
-                                       <?php echo (isset($old['available']) && $old['available']) ? 'checked' : ''; ?>>
-                                <label class="form-check-label" for="available">Disponível para empréstimo</label>
+                                <label for="edition" class="form-label">Data saida</label>
+                                <input type="date" class="form-control" id="dataSaida" name="dataSaida">
                             </div>
 
                             <div class="d-flex justify-content-between">
@@ -120,4 +74,5 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
