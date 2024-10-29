@@ -32,7 +32,7 @@ switch ($action) {
                     session_start();
                     $_SESSION['customer_id'] = $newCustomerId;
                     
-                    // header('Location: '); Direcionar para onde deverá ir após cadastro
+                    header('Location: ../Controller/BookController?action=readall_books'); 
                     exit();
                 } else {
                     

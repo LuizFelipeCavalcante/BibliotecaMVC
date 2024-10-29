@@ -10,7 +10,26 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
 $bookDao = new BookDAOImpl();                       
 $book = new Book();
 
+$bookController = new BookController();
+class BookController{
+    private BookDao $bookDAOl; // Propriedade declarada com tipo
 
+    public function __construct()
+    {
+        // Injeção de dependência do DAO
+        $this->bookDAOl = new BookDaoImpl();
+    }
+
+    public function listarAllBooks()
+    {
+        // Obtém todas as filas do banco de dados via DAO
+        $allbooks = $this->bookDAOl->getAllBooks();
+        $_SESSION['allbooks'] = $allbooks;
+
+        header("Location: ../View/Books/ListarLivros.php");
+        exit();
+    }
+}
 
 switch ($action) {
     case 'create_book':
@@ -71,6 +90,9 @@ switch ($action) {
                 else {displayMessage('Erro ao deletar o registro.');}
             }
 
+        case 'readall_books':
+            $bookController->listarAllBooks();
+            break;
 
     default:
         displayMessage('Ação não reconhecida.');

@@ -15,7 +15,7 @@ class BookDaoImpl implements BookDao {
         try {
             $statement = $this->conn->prepare("SELECT * FROM book");
             $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_CLASS, 'Book');
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

@@ -2,6 +2,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
+    <?php
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    ?>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Biblioteca - Lista de Livros</title>
@@ -25,34 +30,32 @@
             </form>
             <a href="createLivros" class="btn btn-success">Novo Livro</a>
         </div>
-
+            <?php $books = $_SESSION['allbooks'] ?>
         <?php if (!empty($books)): ?>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Título</th>
+                            <th>nome</th>
                             <th>Autor</th>
-                            <th>ISBN</th>
-                            <th>Disponível</th>
-                            <th>Ações</th>
+                            <th>genero</th>
+                            <th>estoque</th>
+                            <th>dataEntrada</th>
+                            <th>dataSaida</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach ($books as $book): ?>
                             <tr>
                                 <td><?php echo htmlspecialchars($book['id']); ?></td>
-                                <td><?php echo htmlspecialchars($book['title']); ?></td>
-                                <td><?php echo htmlspecialchars($book['author']); ?></td>
-                                <td><?php echo htmlspecialchars($book['isbn']); ?></td>
-                                <td>
-                                    <?php if ($book['available']): ?>
-                                        <span class="badge bg-success">Sim</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger">Não</span>
-                                    <?php endif; ?>
-                                </td>
+                                <td><?php echo htmlspecialchars($book['nome']); ?></td>
+                                <td><?php echo htmlspecialchars($book['autor']); ?></td>
+                                <td><?php echo htmlspecialchars($book['genero']); ?></td>
+                                <td><?php echo htmlspecialchars($book['estoque']); ?></td>
+                                <td><?php echo htmlspecialchars($book['dataEntrada']); ?></td>
+                                <td><?php echo htmlspecialchars($book['dataSaida']); ?></td>
+                                
                                 <td>
                                     <div class="btn-group">
                                         <a href="books/view/<?php echo $book['id']; ?>" 

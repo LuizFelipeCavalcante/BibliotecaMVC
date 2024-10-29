@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="css/Cadastro.css">
     <script src="js/Cadastro.js" type="text/javascript" defer></script>
 </head>
-
+    <?php
+      include "../Layout/Header.php";
+    ?>
 
     <body>
         <div class="big-container">
