@@ -1,8 +1,8 @@
 <?php
 
-require_once '../../Config/Connection.php';
+require_once 'Connection.php';
 require_once 'BookDao.php';
-require_once '../Book.php';
+require_once 'Book.php';
 
 class BookDaoImpl implements BookDao {
     private $conn;

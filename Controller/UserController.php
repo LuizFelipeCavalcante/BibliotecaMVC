@@ -3,58 +3,78 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 include_once '../Model/User.php';
-include_once '../Model/Dao/UserDaoImpl.php';
+include_once '../Model/UserDaoImpl.php';
 
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 $id = isset($_GET['id']) ? $_GET['id'] : null;
-$contaDao = new UserDAOImpl();
-$conta = new User();
+$userDao = new UserDAOImpl();
+$user = new User();
 
 
 
 switch ($action) {
     case 'create_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $conta->setNome($_POST['nome']);
-            $conta->setEmail($_POST['email']);
-            $conta->setTelefone($_POST['telefone']);
-            $conta->setSenha($_POST['senha']);
+            $user->setNome($_POST['nome']);
+            $user->setEmail($_POST['email']);
+            $user->setTelefone($_POST['telefone']);
+            $user->setSenha($_POST['senha']);
 
             if (
-                $contaDao->createUser($conta)
+                $userDao->createUser($user)
             ) {
                 displayMessage('Registro inserido com sucesso!', '../index.php');
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
-            $contas = $contaDao->validateLogin($conta->getEmail(), $conta->getSenha());
-            if ($contas == null||$contas == false) {
+            $users = $userDao->validateLogin($user->getEmail(), $user->getSenha());
+            if ($users == null||$users == false) {
                 displayMessage('Nome de usuário ou senha incorretos', '../index.php');
             } else {
-                $_SESSION['user_id'] = $contas->getId();
-                $_SESSION['user_name'] = $contas->getNome();
-                $_SESSION['email'] = $contas->getEmail();
-                $_SESSION['telefone'] = $contas->getTelefone();
-                $_SESSION['senha'] = $contas->getSenha();
+                $_SESSION['user_id'] = $users->getId();
+                $_SESSION['user_name'] = $users->getNome();
+                $_SESSION['email'] = $users->getEmail();
+                $_SESSION['telefone'] = $users->getTelefone();
+                $_SESSION['senha'] = $users->getSenha();
             }
             exit();
         }
         break;
 
+    case 'valida_conta':
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
+            $contas = $contaDao->validateLogin($email, $senha);
+            if ($contas == null||$contas == false) {
+                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
+            } else {
+                
+                $_SESSION['user_id'] = $contas->getId();
+                $_SESSION['user_name'] = $contas->getNome();
+                $_SESSION['email'] = $contas->getEmail();
+                $_SESSION['telefone'] = $contas->getTelefone();
+                $_SESSION['senha'] = $contas->getSenha();
+                header('Location: ../index.php');
+                exit();
+            }
+        }
+        break;
+        
     case 'update_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $conta->setNome($_POST['nome']);
-            $conta->setEmail($_POST['email']);
-            $conta->setTelefone($_POST['telefone']);
-            $conta->setId($_SESSION['user_id']);
-            $conta->setSenha($_SESSION['senha']);
-            $contas = $contaDao->updateUser($conta);
-            if ($contas) {
-                $_SESSION['user_id'] = $conta->getId();
-                $_SESSION['user_name'] = $conta->getNome();
-                $_SESSION['email'] = $conta->getEmail();
-                $_SESSION['telefone'] = $conta->getTelefone();
-                $_SESSION['senha'] = $conta->getSenha();
+            $user->setNome($_POST['nome']);
+            $user->setEmail($_POST['email']);
+            $user->setTelefone($_POST['telefone']);
+            $user->setId($_SESSION['user_id']);
+            $user->setSenha($_SESSION['senha']);
+            $users = $userDao->updateUser($user);
+            if ($users) {
+                $_SESSION['user_id'] = $user->getId();
+                $_SESSION['user_name'] = $user->getNome();
+                $_SESSION['email'] = $user->getEmail();
+                $_SESSION['telefone'] = $user->getTelefone();
+                $_SESSION['senha'] = $user->getSenha();
 
                 header('Location: ../index.php');
                 exit();
@@ -66,8 +86,8 @@ switch ($action) {
 
     case 'delete_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $conta = $contaDao->deleteUser($_SESSION['user_id']);
-            if ($conta) {
+            $user = $userDao->deleteUser($_SESSION['user_id']);
+            if ($user) {
                 header('Location: ../index.php');
             }
             else {displayMessage('Erro ao deletar o registro.');}
@@ -98,7 +118,7 @@ function displayMessage($message, $redirectUrl = null)
             background-color: #f0f0f0;
             color: #333;
         }
-        .container {
+        .useriner {
             text-align: center;
             padding: 20px;
             border-radius: 8px;
@@ -118,7 +138,7 @@ function displayMessage($message, $redirectUrl = null)
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="useriner">
         <p>' . htmlspecialchars($message) . '</p>';
     if ($redirectUrl) {
         echo '<a href="' . htmlspecialchars($redirectUrl) . '">Voltar</a>';

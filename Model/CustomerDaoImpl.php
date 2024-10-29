@@ -1,8 +1,8 @@
 <?php
 
-require_once '../../Config/Connection.php';
+require_once 'Connection.php';
 require_once 'CustomerDao.php';
-require_once '../Customer.php';
+require_once 'Customer.php';
 
 class CustomerDaoImpl implements CustomerDao {
     private $conn;
@@ -25,7 +25,7 @@ class CustomerDaoImpl implements CustomerDao {
 
     public function createCustomer($user) {
         try {
-            $statement = $this->conn->prepare("INSERT INTO customer (nome, email, senha,) VALUES (:nome, :email, :senha)");
+            $statement = $this->conn->prepare("INSERT INTO customer (nome, email, senha) VALUES (:nome, :email, :senha)");
     
             // Criando variáveis para armazenar os valores
             $nome = $user->getNome();
@@ -36,8 +36,10 @@ class CustomerDaoImpl implements CustomerDao {
             $statement->bindParam(':nome', $nome);
             $statement->bindParam(':email', $email);
             $statement->bindParam(':senha', $senha);
-            
-            return $statement->execute();
+
+            $statement->execute();
+
+            return $this->conn->lastInsertId();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }

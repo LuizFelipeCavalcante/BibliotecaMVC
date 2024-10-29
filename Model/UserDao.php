@@ -5,5 +5,6 @@ interface UserDao {
     public function createUser($user);
     public function updateUser($user);
     public function deleteUser($id);
+    public function validateLogin($email, $senha);
 }
 
