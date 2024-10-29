@@ -7,13 +7,13 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
             <a class="nav-item nav-link active" href="">Home <span class="sr-only">(Página atual)</span></a>
-            <?php if (!isset($_SESSION['user_id'])) {
+            <?php if (!isset($_SESSION['customer'])) {
                 echo '<a class="nav-item nav-link" href="">Login</a>';
             }
             ?>
 
             <?php
-            if (!isset($_SESSION['user_id'])) {
+            if (!isset($_SESSION['customer_id'])) {
                 echo '<a class="nav-item nav-link"><b>Deslogado</b></a>';
             } else {
                 echo '<a class="nav-item nav-link" href="../Logout">Sair</a><a class="nav-item nav-link"><b>' . $_SESSION['user_name'] . '</b></a>';
