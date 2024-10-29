@@ -48,9 +48,7 @@ class UserDaoImpl implements UserDao {
             $statement->bindParam(':telefone', $telefone);
             $statement->bindParam(':senha', $senha);
 
-            $statement->execute();
-
-            return $this->conn->lastInsertId();
+            return $statement->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -58,7 +56,6 @@ class UserDaoImpl implements UserDao {
     
     public function updateUser($user) {
         try {
-            
             $statement = $this->conn->prepare("UPDATE user SET nome = :nome, email = :email, telefone = :telefone, senha = :senha WHERE id = :id");
             $statement->bindParam(':nome', $user->getNome());
             $statement->bindParam(':email', $user->getEmail());

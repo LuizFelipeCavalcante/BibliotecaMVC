@@ -35,51 +35,24 @@ class UserController{
 switch ($action) {
     case 'create_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $user->setNome($_POST['nome']);
-            $user->setEmail($_POST['email']);
-            $user->setTelefone($_POST['telefone']);
-            $user->setSenha($_POST['senha']);
-
-            if (
-                $userDao->createUser($user)
-            ) {
-                displayMessage('Registro inserido com sucesso!', '../index.php');
-            } else {
-                displayMessage('Erro ao inserir o registro.');
-            }
-            $users = $userDao->validateLogin($user->getEmail(), $user->getSenha());
-            if ($users == null||$users == false) {
-                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
-            } else {
-                $_SESSION['user_id'] = $users->getId();
-                $_SESSION['user_name'] = $users->getNome();
-                $_SESSION['email'] = $users->getEmail();
-                $_SESSION['telefone'] = $users->getTelefone();
-                $_SESSION['senha'] = $users->getSenha();
-            }
-            exit();
+                $user->setNome($_POST['nome']);
+                $user->setEmail($_POST['email']);
+                $user->setTelefone($_POST['telefone']);
+                $user->setSenha($_POST['senha']);
+    
+    
+                if ($userDao->createUser($user)) {
+                    echo '<script type="text/javascript">
+                            alert("Usuário criado com sucesso.");
+                            window.location.href="../View/Users/ListarUsuarios.php";
+                         </script>';
+                } else {
+                    displayMessage('Erro ao criar usuário.');
+                }
+            
         }
-        break;
+        break;    
 
-    case 'valida_conta':
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $email = $_POST['email'];
-            $senha = $_POST['senha'];
-            $contas = $contaDao->validateLogin($email, $senha);
-            if ($contas == null||$contas == false) {
-                displayMessage('Nome de usuário ou senha incorretos', '../index.php');
-            } else {
-                
-                $_SESSION['user_id'] = $contas->getId();
-                $_SESSION['user_name'] = $contas->getNome();
-                $_SESSION['email'] = $contas->getEmail();
-                $_SESSION['telefone'] = $contas->getTelefone();
-                $_SESSION['senha'] = $contas->getSenha();
-                header('Location: ../index.php');
-                exit();
-            }
-        }
-        break;
         
     case 'update_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -96,7 +69,7 @@ switch ($action) {
                 $_SESSION['telefone'] = $user->getTelefone();
                 $_SESSION['senha'] = $user->getSenha();
 
-                header('Location: ../index.php');
+                header('Location: ../View/Users/ListarUsuarios.php');
                 exit();
             } else {
                 displayMessage('Erro ao atualizar o registro.');
@@ -106,11 +79,19 @@ switch ($action) {
 
     case 'delete_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $user = $userDao->deleteUser($_SESSION['user_id']);
-            if ($user) {
-                header('Location: ../index.php');
+            $id = $_POST['id'];
+            
+            if ($userDao->deleteUser($id)) {
+                echo '<script type="text/javascript">
+                        alert("Usuário deletado com sucesso");
+                        window.location.href="../View/Users/ListarUsuarios.php";
+                      </script>';
+            } else {
+                echo '<script type="text/javascript">
+                        alert("Erro ao deletar usuário.");
+                        window.location.href="../View/Users/ListarUsuarios.php";
+                      </script>';
             }
-            else {displayMessage('Erro ao deletar o registro.');}
         }
         break;
 
