@@ -7,6 +7,8 @@ $action = isset($_GET['action']) ? $_GET['action'] : '';
 $customerDao = new CustomerDaoImpl();
 $customer = new Customer();
 
+
+
 switch ($action) {
     case 'create_customer':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -58,6 +60,7 @@ switch ($action) {
             }
         }
         break;
+
 
     default:
         echo 'Ação inválida.';

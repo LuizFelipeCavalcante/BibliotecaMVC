@@ -10,6 +10,26 @@ $id = isset($_GET['id']) ? $_GET['id'] : null;
 $userDao = new UserDAOImpl();
 $user = new User();
 
+$userController = new UserController();
+class UserController{
+    private UserDao $userDAOl; // Propriedade declarada com tipo
+
+    public function __construct()
+    {
+        // Injeção de dependência do DAO
+        $this->userDAOl = new UserDaoImpl();
+    }
+
+    public function listarAllUsers()
+    {
+        // Obtém todas as filas do banco de dados via DAO
+        $allusers = $this->userDAOl->getAllUsers();
+        $_SESSION['allusers'] = $allusers;
+
+        header("Location: ../View/Users/ListarUsuarios.php");
+        exit();
+    }
+}
 
 
 switch ($action) {
@@ -92,6 +112,11 @@ switch ($action) {
             }
             else {displayMessage('Erro ao deletar o registro.');}
         }
+        break;
+
+    case 'readall_users':
+        $userController->listarAllUsers();
+        break;
 
     default:
         displayMessage('Ação não reconhecida.');

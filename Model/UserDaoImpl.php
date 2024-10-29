@@ -35,32 +35,31 @@ class UserDaoImpl implements UserDao {
     public function createUser($user) {
         try {
             $statement = $this->conn->prepare("INSERT INTO user (nome, email, telefone, senha) VALUES (:nome, :email, :telefone, :senha)");
-            $statement->bindParam(':nome', $user->getNome());
-            $statement->bindParam(':email', $user->getEmail());
-            $statement->bindParam(':telefone', $user->getTelefone());
-            $statement->bindParam(':senha', $user->getSenha());
-            return $statement->execute();
+    
+            // Criando variáveis para armazenar os valores
+            $nome = $user->getNome();
+            $email = $user->getEmail();
+            $telefone = $user->getTelefone();
+            $senha = $user->getSenha();
+    
+            // Usando as variáveis para o bindParam
+            $statement->bindParam(':nome', $nome);
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':telefone', $telefone);
+            $statement->bindParam(':senha', $senha);
+
+            $statement->execute();
+
+            return $this->conn->lastInsertId();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
     }
     
-    public function validateLogin($email, $senha) {
-        try {
-            $statement = $this->conn->prepare("SELECT * FROM user WHERE email = :email AND senha = :senha");
-            $statement->bindParam(':email', $email);
-            $statement->bindParam(':senha', $senha);
-            $statement->execute();
-            return $statement->fetchObject('User');
-        } catch (PDOException $e) {
-            echo "Error: " . $e->getMessage();
-        }
-    }
-
     public function updateUser($user) {
         try {
             
-            $statement = $this->conn->prepare("UPDATE user SET nome = :nome, email = :email, telefone = :telefone, senha = :senha where id = :id");
+            $statement = $this->conn->prepare("UPDATE user SET nome = :nome, email = :email, telefone = :telefone, senha = :senha WHERE id = :id");
             $statement->bindParam(':nome', $user->getNome());
             $statement->bindParam(':email', $user->getEmail());
             $statement->bindParam(':telefone', $user->getTelefone());
@@ -71,6 +70,7 @@ class UserDaoImpl implements UserDao {
             echo "Error: " . $e->getMessage();
         }
     }
+
     public function deleteUser($id) {
         try {
             $statement = $this->conn->prepare("DELETE FROM user WHERE id = :id");
