@@ -66,4 +66,3 @@ class Book {
         $this->dataEntrada = $dataSaida;
     }
 }
-?>

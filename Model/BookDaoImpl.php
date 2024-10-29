@@ -35,7 +35,7 @@ class BookDaoImpl implements BookDao {
     public function createBook($book) {
         try {
             $statement = $this->conn->prepare("INSERT INTO book (nome, autor, genero, estoque, dataEntrada, dataSaida) VALUES (:nome, :autor, :genero, :estoque, :dataEntrada, :dataSaida)");
-            $statement->bindParam(':nome', $book->getTitulo());
+            $statement->bindParam(':nome', $book->getNome());
             $statement->bindParam(':autor', $book->getAutor());
             $statement->bindParam(':genero', $book->getGenero());
             $statement->bindParam(':estoque', $book->getEstoque());

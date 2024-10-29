@@ -6,4 +6,4 @@ interface BookDao {
     public function updateBook($book);
     public function deleteBook($id);
 }
-?>
+

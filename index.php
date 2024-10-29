@@ -1,15 +1,21 @@
 <?php
-session_start();
-if ($_SESSION['customer_id'] == null) {
+if ($_SESSION['user_id'] == null) {
     header('Location: View/LoginCustomer.php');
 }
 else {
-$customerId = $_SESSION['customer_id'];
+    $nomeUsuário = '';
+$_SESSION ['user_id'] = $nomeUsuário;
+echo "carlinhos maia";
 
-echo '<script type="text/javascript">
-                        alert("Email ou senha incorretos.");
-                        window.location.href="../index.php";
-                      </script>';
+
+
+
+
+
+
+
+
+
 
 
 };
