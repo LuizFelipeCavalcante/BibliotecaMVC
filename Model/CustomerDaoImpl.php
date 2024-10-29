@@ -23,14 +23,14 @@ class CustomerDaoImpl implements CustomerDao {
         }
     }
 
-    public function createCustomer($user) {
+    public function createCustomer($customer) {
         try {
             $statement = $this->conn->prepare("INSERT INTO customer (nome, email, senha) VALUES (:nome, :email, :senha)");
     
             // Criando variáveis para armazenar os valores
-            $nome = $user->getNome();
-            $email = $user->getEmail();
-            $senha = $user->getSenha();
+            $nome = $customer->getNome();
+            $email = $customer->getEmail();
+            $senha = $customer->getSenha();
     
             // Usando as variáveis para o bindParam
             $statement->bindParam(':nome', $nome);
