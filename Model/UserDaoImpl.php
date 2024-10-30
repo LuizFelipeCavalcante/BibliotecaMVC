@@ -13,9 +13,9 @@ class UserDaoImpl implements UserDao {
 
     public function getAllUsers() {
         try {
-            $statement = $this->conn->prepare("SELECT * FROM usuario");
+            $statement = $this->conn->prepare("SELECT * FROM user");
             $statement->execute();
-            return $statement->fetchAll(PDO::FETCH_CLASS, 'User');
+            return $statement->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -23,10 +23,10 @@ class UserDaoImpl implements UserDao {
 
     public function getUser($id) {
         try {
-            $statement = $this->conn->prepare("SELECT * FROM usuario WHERE id = :id");
+            $statement = $this->conn->prepare("SELECT * FROM user WHERE id = :id");
             $statement->bindParam(':id', $id);
             $statement->execute();
-            return $statement->fetchObject('User');
+            return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -57,11 +57,18 @@ class UserDaoImpl implements UserDao {
     public function updateUser($user) {
         try {
             $statement = $this->conn->prepare("UPDATE user SET nome = :nome, email = :email, telefone = :telefone, senha = :senha WHERE id = :id");
-            $statement->bindParam(':nome', $user->getNome());
-            $statement->bindParam(':email', $user->getEmail());
-            $statement->bindParam(':telefone', $user->getTelefone());
-            $statement->bindParam(':senha', $user->getSenha());
-            $statement->bindParam(':id', $user->getId());
+            $nome = $user->getNome();
+            $email = $user->getEmail();
+            $telefone = $user->getTelefone();
+            $senha = $user->getSenha();
+            $id = $user->getId();
+    
+            // Usando as variáveis para o bindParam
+            $statement->bindParam(':nome', $nome);
+            $statement->bindParam(':email', $email);
+            $statement->bindParam(':telefone', $telefone);
+            $statement->bindParam(':senha', $senha);
+            $statement->bindParam(':id', $id);
             return $statement->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();

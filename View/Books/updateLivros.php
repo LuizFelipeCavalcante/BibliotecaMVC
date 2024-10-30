@@ -73,7 +73,7 @@
                             </div>
 
                             <div class="d-flex justify-content-between">
-                                <a href="/books" class="btn btn-secondary">Voltar</a>
+                                <a href="../../Controller/BookController.php?action=readall_books" class="btn btn-secondary">Voltar</a>
                                 <button type="submit" class="btn btn-primary">Atualizar Livro</button>
                             </div>
                         </form>

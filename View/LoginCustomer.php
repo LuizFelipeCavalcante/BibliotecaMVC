@@ -7,7 +7,7 @@
     <title>Login Usuario</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/Cadastro.css">
+    <link rel="stylesheet" href="css/Login.css">
     <script src="js/Cadastro.js" type="text/javascript" defer></script>
 </head>
     <?php
@@ -46,6 +46,18 @@
                     </form>
                 </div>
             </div>
+        </div>
+
+
+        <div class="container">
+            <footer class="py-3 my-4">
+              <ul class="nav justify-content-center border-top pt-3 mt-3">
+                <li class="nav-item mr-3"><a href="https://github.com/ooFreitaz">Arthur Freitas</a></li>
+                <li class="nav-item mr-3"><a href="https://github.com/SWMG0069">Henrique Brincs</a></li>
+                <li class="nav-item mr-3"><a href="https://github.com/LuizFelipeCavalcante">Luiz Felipe</a></li>
+                <li class="nav-item"><a href="https://github.com/ArthurMLi">Arthur Mendes</a></li>
+              </ul>
+            </footer>
         </div>
     </body>
 

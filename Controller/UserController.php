@@ -29,6 +29,16 @@ class UserController{
         header("Location: ../View/Users/ListarUsuarios.php");
         exit();
     }
+
+    public function listarUser($idUser)
+    {
+        // Obtém todas as filas do banco de dados via DAO
+        $oneuser = $this->userDAOl->getUser($idUser);
+        $_SESSION['oneuser'] = $oneuser;
+
+        header("Location: ../View/Users/updateUsuarios.php");
+        exit();
+    }
 }
 
 
@@ -39,16 +49,15 @@ switch ($action) {
                 $user->setEmail($_POST['email']);
                 $user->setTelefone($_POST['telefone']);
                 $user->setSenha($_POST['senha']);
-    
-    
-                if ($userDao->createUser($user)) {
-                    echo '<script type="text/javascript">
-                            alert("Usuário criado com sucesso.");
-                            window.location.href="../View/Users/ListarUsuarios.php";
-                         </script>';
+
+                if (
+                    $userDao->createUser($user)
+                ) {
+                    displayMessage('Registro inserido com sucesso!', '../Controller/UserController?action=readall_users');
                 } else {
-                    displayMessage('Erro ao criar usuário.');
+                    displayMessage('Erro ao inserir o registro.');
                 }
+    
             
         }
         break;    
@@ -59,17 +68,17 @@ switch ($action) {
             $user->setNome($_POST['nome']);
             $user->setEmail($_POST['email']);
             $user->setTelefone($_POST['telefone']);
-            $user->setId($_SESSION['user_id']);
-            $user->setSenha($_SESSION['senha']);
+            $user->setId($id);
+            $user->setSenha($_POST['senha']);
             $users = $userDao->updateUser($user);
             if ($users) {
-                $_SESSION['user_id'] = $user->getId();
-                $_SESSION['user_name'] = $user->getNome();
-                $_SESSION['email'] = $user->getEmail();
-                $_SESSION['telefone'] = $user->getTelefone();
-                $_SESSION['senha'] = $user->getSenha();
+                // $_SESSION['user_id'] = $user->getId();
+                // $_SESSION['user_name'] = $user->getNome();
+                // $_SESSION['email'] = $user->getEmail();
+                // $_SESSION['telefone'] = $user->getTelefone();
+                // $_SESSION['senha'] = $user->getSenha();
 
-                header('Location: ../View/Users/ListarUsuarios.php');
+                header('Location: ../Controller/UserController?action=readall_users');
                 exit();
             } else {
                 displayMessage('Erro ao atualizar o registro.');
@@ -79,18 +88,11 @@ switch ($action) {
 
     case 'delete_user':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $id = $_POST['id'];
-            
-            if ($userDao->deleteUser($id)) {
-                echo '<script type="text/javascript">
-                        alert("Usuário deletado com sucesso");
-                        window.location.href="../View/Users/ListarUsuarios.php";
-                      </script>';
+            $user = $userDao->deleteUser($id);
+            if ($user) {
+                header('Location: ../Controller/UserController?action=readall_users');
             } else {
-                echo '<script type="text/javascript">
-                        alert("Erro ao deletar usuário.");
-                        window.location.href="../View/Users/ListarUsuarios.php";
-                      </script>';
+                displayMessage('Erro ao deletar o registro.');
             }
         }
         break;
@@ -99,6 +101,9 @@ switch ($action) {
         $userController->listarAllUsers();
         break;
 
+     case 'read_user':
+         $userController->listarUser($id);
+         break;
     default:
         displayMessage('Ação não reconhecida.');
         break;

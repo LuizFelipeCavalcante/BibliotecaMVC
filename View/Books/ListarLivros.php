@@ -26,7 +26,8 @@
             <form class="d-flex" method="GET" action="">
                 <input type="text" name="search" class="form-control me-2" placeholder="Pesquisar livro..." 
                        value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">
-                <button type="submit" class="btn btn-primary">Buscar</button>
+                <button type="submit" class="btn btn-primary me-2">Buscar</button>
+                <a href="../../Controller/UserController.php?action=readall_users" class="btn btn-success">Usuários</a>
             </form>
             <a href="createLivros" class="btn btn-success">Novo Livro</a>
         </div>
@@ -37,12 +38,12 @@
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>nome</th>
+                            <th>Nome</th>
                             <th>Autor</th>
-                            <th>genero</th>
-                            <th>estoque</th>
-                            <th>dataEntrada</th>
-                            <th>dataSaida</th>
+                            <th>Gênero</th>
+                            <th>Estoque</th>
+                            <th>Data de Entrada</th>
+                            <th>Data de Saída</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -60,7 +61,7 @@
                                     <div class="btn-group">
                                         
                                         <a href="../../Controller/BookController?action=read_book&id=<?php echo htmlspecialchars($book['id']); ?>"
-                                           class="btn btn-sm btn-warning">Editar</a>
+                                           class="btn btn-sm btn-warning me-2">Editar</a>
                                         <form method="POST" action="../../Controller/BookController?action=delete_book&id=<?php echo htmlspecialchars($book['id']); ?>" 
                                               style="display: inline;" 
                                               onsubmit="return confirm('Tem certeza que deseja excluir este livro?');">
