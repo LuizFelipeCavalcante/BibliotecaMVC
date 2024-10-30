@@ -52,10 +52,10 @@
         <div class="container">
             <footer class="py-3 my-4">
               <ul class="nav justify-content-center border-top pt-3 mt-3">
-                <li class="nav-item mr-3"><a href="https://github.com/ooFreitaz">Arthur Freitas</a></li>
-                <li class="nav-item mr-3"><a href="https://github.com/SWMG0069">Henrique Brincs</a></li>
-                <li class="nav-item mr-3"><a href="https://github.com/LuizFelipeCavalcante">Luiz Felipe</a></li>
-                <li class="nav-item"><a href="https://github.com/ArthurMLi">Arthur Mendes</a></li>
+                <li class="nav-item mr-3"><a href="https://github.com/ooFreitaz" target="_blank">Arthur Freitas</a></li>
+                <li class="nav-item mr-3"><a href="https://github.com/SWMG0069" target="_blank">Henrique Brincs</a></li>
+                <li class="nav-item mr-3"><a href="https://github.com/LuizFelipeCavalcante" target="_blank">Luiz Felipe</a></li>
+                <li class="nav-item"><a href="https://github.com/ArthurMLi" target="_blank">Arthur Mendes</a></li>
               </ul>
             </footer>
         </div>
