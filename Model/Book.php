@@ -63,6 +63,6 @@ class Book {
     }
 
     public function setDataSaida($dataSaida) {
-        $this->dataEntrada = $dataSaida;
+        $this->dataSaida = $dataSaida;
     }
 }

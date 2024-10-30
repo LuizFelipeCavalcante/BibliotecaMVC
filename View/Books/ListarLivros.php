@@ -58,11 +58,10 @@
                                 
                                 <td>
                                     <div class="btn-group">
-                                        <a href="books/view/<?php echo $book['id']; ?>" 
-                                           class="btn btn-sm btn-info">Ver</a>
-                                        <a href="books/edit/<?php echo $book['id']; ?>" 
+                                        
+                                        <a href="../../Controller/BookController?action=read_book&id=<?php echo htmlspecialchars($book['id']); ?>"
                                            class="btn btn-sm btn-warning">Editar</a>
-                                        <form method="POST" action="books/delete/<?php echo $book['id']; ?>" 
+                                        <form method="POST" action="../../Controller/BookController?action=delete_book&id=<?php echo htmlspecialchars($book['id']); ?>" 
                                               style="display: inline;" 
                                               onsubmit="return confirm('Tem certeza que deseja excluir este livro?');">
                                             <button type="submit" class="btn btn-sm btn-danger">Excluir</button>

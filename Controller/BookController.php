@@ -29,6 +29,15 @@ class BookController{
         header("Location: ../View/Books/ListarLivros.php");
         exit();
     }
+    public function listarBook($idBook)
+    {
+        // Obtém todas as filas do banco de dados via DAO
+        $onebook = $this->bookDAOl->getBook($idBook);
+        $_SESSION['onebook'] = $onebook;
+
+        header("Location: ../View/Books/updateLivros.php");
+        exit();
+    }
 }
 
 switch ($action) {
@@ -44,7 +53,7 @@ switch ($action) {
             if (
                 $bookDao->createbook($book)
             ) {
-                displayMessage('Registro inserido com sucesso!', '../index.php');
+                displayMessage('Registro inserido com sucesso!', '../Controller/BookController?action=readall_books');
             } else {
                 displayMessage('Erro ao inserir o registro.');
             }
@@ -57,22 +66,22 @@ switch ($action) {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             $book->setId($id);
-            $book->setNome($_POST['nome']);
-            $book->setAutor($_POST['autor']);
+            $book->setNome($_POST['title']);
+            $book->setAutor($_POST['author']);
             $book->setGenero($_POST['genero']);
             $book->setEstoque($_POST['estoque']);
-            $book->setDataEntrada($_POST['dataentrada']);
-            $book->setDataSaida($_POST['datasaida']);
+            $book->setDataEntrada($_POST['dataEntrada']);
+            $book->setDataSaida($_POST['dataSaida']);
             $books = $bookDao->updateBook($book);
             if ($books) {
-                $_SESSION['book_id'] = $book->getId();
-                $_SESSION['book_name'] = $book->getNome();
-                $_SESSION['book_genero'] = $book->getGenero();
-                $_SESSION['book_estoque'] = $book->getEstoque();
-                $_SESSION['book_dataentrada'] = $book->getDataEntrada();
-                $_SESSION['book_datasaida'] = $book->getDataSaida();
+                // $_SESSION['book_id'] = $book->getId();
+                // $_SESSION['book_name'] = $book->getNome();
+                // $_SESSION['book_genero'] = $book->getGenero();
+                // $_SESSION['book_estoque'] = $book->getEstoque();
+                // $_SESSION['book_dataentrada'] = $book->getDataEntrada();
+                // $_SESSION['book_datasaida'] = $book->getDataSaida();
 
-                header('Location: ../index.php');
+                header('Location: ../Controller/BookController?action=readall_books');
                 exit();
             } else {
                 displayMessage('Erro ao atualizar o registro.');
@@ -82,9 +91,9 @@ switch ($action) {
 
     case 'delete_book':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $book = $bookDao->deleteBook($_SESSION['book_id']);
+            $book = $bookDao->deleteBook($id);
             if ($book) {
-                header('Location: ../index.php');
+                header('Location: ../Controller/BookController?action=readall_books');
             } else {
                 displayMessage('Erro ao deletar o registro.');
             }
@@ -94,6 +103,9 @@ switch ($action) {
             $bookController->listarAllBooks();
             break;
 
+        case 'read_book':
+            $bookController->listarBook($id);
+            break;
     default:
         displayMessage('Ação não reconhecida.');
         break;

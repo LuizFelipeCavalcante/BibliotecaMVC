@@ -50,7 +50,7 @@ switch ($action) {
             if ($customer) {
                 session_start();
                 $_SESSION['customer_id'] = $customer->getId();
-                // header('Location: '); Direcionar para onde deverá ir após logado
+                header('Location: ../Controller/BookController?action=readall_books');
                 exit();
             } else {
                 echo '<script type="text/javascript">

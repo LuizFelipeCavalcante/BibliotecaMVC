@@ -11,7 +11,7 @@
     <script src="js/Cadastro.js" type="text/javascript" defer></script>
 </head>
     <?php
-      include "../Layout/Header.php";
+      include "Layout/Header.php";
     ?>
 
     <body>

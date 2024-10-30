@@ -23,10 +23,11 @@ class BookDaoImpl implements BookDao {
 
     public function getBook($id) {
         try {
-            $statement = $this->conn->prepare("SELECT * FROM book WHERE id = :id");
+            $sql = "SELECT * FROM book WHERE id = :id";
+            $statement = $this->conn->prepare($sql);
             $statement->bindParam(':id', $id);
             $statement->execute();
-            return $statement->fetchObject('Book');
+            return $statement->fetch(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
         }
@@ -35,12 +36,12 @@ class BookDaoImpl implements BookDao {
     public function createBook($book) {
         try {
             $statement = $this->conn->prepare("INSERT INTO book (nome, autor, genero, estoque, dataEntrada, dataSaida) VALUES (:nome, :autor, :genero, :estoque, :dataEntrada, :dataSaida)");
-            $statement->bindParam(':nome', $book->getNome());
-            $statement->bindParam(':autor', $book->getAutor());
-            $statement->bindParam(':genero', $book->getGenero());
-            $statement->bindParam(':estoque', $book->getEstoque());
-            $statement->bindParam(':dataEntrada', $book->getDataEntrada());
-            $statement->bindParam(':dataSaida', $book->getDataSaida());
+            $statement->bindValue(':nome', $book->getNome());
+            $statement->bindValue(':autor', $book->getAutor());
+            $statement->bindValue(':genero', $book->getGenero());
+            $statement->bindValue(':estoque', $book->getEstoque());
+            $statement->bindValue(':dataEntrada', $book->getDataEntrada());
+            $statement->bindValue(':dataSaida', $book->getDataSaida());
             return $statement->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
@@ -49,14 +50,14 @@ class BookDaoImpl implements BookDao {
 
     public function updateBook($book) {
         try {
-            $statement = $this->conn->prepare("UPDATE book SET nome = :nome, autor = :autor, genero = :genero, estoque = :estoque, dataEntrada = :dataEntrada, datasaida = :datasaida, dataSaida = :dataSaida WHERE id = :id");
-            $statement->bindParam(':id', $book->getId());
-            $statement->bindParam(':nome', $book->getTitulo());
-            $statement->bindParam(':autor', $book->getAutor());
-            $statement->bindParam(':genero', $book->getGenero());
-            $statement->bindParam(':estoque', $book->getEstoque());
-            $statement->bindParam(':dataEntrada', $book->getDataEntrada());
-            $statement->bindParam(':dataSaida', $book->getDataSaida());
+            $statement = $this->conn->prepare("UPDATE book SET nome = :nome, autor = :autor, genero = :genero, estoque = :estoque, dataEntrada = :dataEntrada, dataSaida = :dataSaida WHERE id = :id");
+            $statement->bindValue(':id', $book->getId());
+            $statement->bindValue(':nome', $book->getNome());
+            $statement->bindValue(':autor', $book->getAutor());
+            $statement->bindValue(':genero', $book->getGenero());
+            $statement->bindValue(':estoque', $book->getEstoque());
+            $statement->bindValue(':dataEntrada', $book->getDataEntrada());
+            $statement->bindValue(':dataSaida', $book->getDataSaida());
             return $statement->execute();
         } catch (PDOException $e) {
             echo "Error: " . $e->getMessage();
