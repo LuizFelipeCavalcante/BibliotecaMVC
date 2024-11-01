@@ -48,7 +48,7 @@
                                 <label for="senha" class="form-label">Senha * </label>
                                 <input type="text" class="form-control" id="senha" name="senha">
                             </div>
-
+                                <a href="../../Controller/UserController.php?action=readall_users" class="btn btn-secondary">Voltar</a>
                                 <button type="submit" class="btn btn-primary">Cadastrar Usuário</button>
                             </div>
                         </form>
